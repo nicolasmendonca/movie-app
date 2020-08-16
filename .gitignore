@@ -7,6 +7,7 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.orig.*
+src/config.ts
 web-build/
 
 # macOS
