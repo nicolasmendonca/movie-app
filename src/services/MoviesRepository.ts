@@ -4,7 +4,7 @@ import { IMoviesFetcherService } from "../useCases";
 type FetchType = typeof axios;
 import { REACT_NATIVE_TMDB_API_KEY } from "../config";
 
-interface ITmdbMovie {
+export interface ITmdbMovie {
   id: number;
   title?: string;
   poster_path: string;
@@ -16,7 +16,7 @@ interface ITmdbMovie {
   name?: string;
 }
 
-interface ITmdbMoviePageResponse {
+export interface ITmdbMoviePageResponse {
   page: number;
   results: ITmdbMovie[];
   total_pages: number;
@@ -51,11 +51,11 @@ export class TmdbService implements IMoviesFetcherService {
     });
   }
 
-  public static getMoviePosterPath(movie: Movie) {
+  public static getMoviePosterPath(movie: Pick<Movie, "posterPath">) {
     return `https://image.tmdb.org/t/p/w440_and_h660_face${movie.posterPath}`;
   }
 
-  public static getMovieBackdropPath(movie: Movie) {
+  public static getMovieBackdropPath(movie: Pick<Movie, "backdropPath">) {
     return `https://image.tmdb.org/t/p/w370_and_h556_multi_faces${movie.backdropPath}`;
   }
 }

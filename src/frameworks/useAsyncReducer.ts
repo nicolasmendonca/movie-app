@@ -50,23 +50,23 @@ export function useAsyncReducer<T>() {
     switch (action.type) {
       case "ASYNC_ACTION_SET_IDLE":
         return {
-          ...state,
+          ...initialState,
           status: "idle",
         };
       case "ASYNC_ACTION_SET_LOADING":
         return {
-          ...state,
+          ...initialState,
           status: "loading",
         };
       case "ASYNC_ACTION_SET_SUCCESS":
         return {
-          ...state,
+          ...initialState,
           status: "success",
           data: action.data,
         };
       case "ASYNC_ACTION_SET_ERROR":
         return {
-          ...state,
+          ...initialState,
           status: "error",
           error: action.error,
         };
