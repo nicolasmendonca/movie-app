@@ -1,1 +1,2 @@
-export * from "./MoviesPageInteractor";
+export * from "./MoviesFetcherInteractor";
+export * from "./MoviesRaterInteractor";

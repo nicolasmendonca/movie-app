@@ -4,7 +4,7 @@ export interface IMoviesFetcherService {
   fetchMovies: () => Promise<Movie[]>;
 }
 
-export class MoviesPageInteractor {
+export class MoviesFetcherInteractor {
   private moviesFetcherService: IMoviesFetcherService;
 
   constructor(moviesFetcherService: IMoviesFetcherService) {

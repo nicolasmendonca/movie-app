@@ -5,6 +5,8 @@ export interface IMovieData {
   backdropPath: string;
   overview: string;
   popularity: number;
+  averageRating: number;
+  customRating?: number;
 }
 
 export class Movie implements IMovieData {
@@ -14,6 +16,8 @@ export class Movie implements IMovieData {
   public backdropPath: string;
   public overview: string;
   public popularity: number;
+  public averageRating: number;
+  public customRating?: number;
 
   constructor(data: IMovieData) {
     this.id = data.id;
@@ -22,5 +26,11 @@ export class Movie implements IMovieData {
     this.backdropPath = data.backdropPath;
     this.overview = data.overview;
     this.popularity = data.popularity;
+    this.averageRating = data.averageRating;
+    this.customRating = data.customRating;
+  }
+
+  public setCustomRate(customRating: number) {
+    this.customRating = customRating;
   }
 }

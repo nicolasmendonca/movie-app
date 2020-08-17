@@ -1,10 +1,11 @@
-import { TmdbService } from "..";
-import { MoviesPageInteractor } from "../../useCases";
+import { TmdbService, ITmdbMoviePageResponse } from "..";
+import { MoviesFetcherInteractor } from "../../useCases";
 import { Movie } from "../../entities";
+import { AxiosResponse } from "axios";
 
 describe("MoviesRepository", () => {
   describe("TmdbService", () => {
-    test("fetchMovies method success", async (done) => {
+    test("fetchMovies method success", async () => {
       const movieData: Movie = {
         id: 1,
         backdropPath: "/backdrop.png",
@@ -12,8 +13,9 @@ describe("MoviesRepository", () => {
         popularity: 2.5,
         posterPath: "/poster.png",
         title: "movie name",
+        averageRating: 3.6,
       };
-      const fetch = jest.fn().mockResolvedValue({
+      const fetchResponse: Partial<AxiosResponse<ITmdbMoviePageResponse>> = {
         data: {
           page: 1,
           total_pages: 10,
@@ -26,12 +28,14 @@ describe("MoviesRepository", () => {
               popularity: movieData.popularity,
               poster_path: movieData.posterPath,
               name: movieData.title,
+              vote_average: 7.2,
             },
           ],
         },
-      });
+      };
+      const fetch = jest.fn().mockResolvedValue(fetchResponse);
       const movieService = new TmdbService(fetch as any);
-      const instance = new MoviesPageInteractor(movieService);
+      const instance = new MoviesFetcherInteractor(movieService);
       const result = await instance.fetchMovies();
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith(
@@ -41,14 +45,13 @@ describe("MoviesRepository", () => {
       );
       expect(result).toHaveLength(1);
       expect(result[0]).toEqual(new Movie(movieData));
-      done();
     });
 
     test("fetchMovies method error", () => {
       const error = new Error("something went wrong");
       const fetch = jest.fn().mockRejectedValue(error);
       const movieService = new TmdbService(fetch as any);
-      const instance = new MoviesPageInteractor(movieService);
+      const instance = new MoviesFetcherInteractor(movieService);
       return instance.fetchMovies().catch((e) => {
         expect(e).toEqual(error);
       });

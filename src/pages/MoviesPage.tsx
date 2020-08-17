@@ -1,6 +1,6 @@
 import React from "react";
 import { Animated, Text, View, StyleSheet } from "react-native";
-import { useMovies } from "../frameworks";
+import { useMoviesWithRating } from "../frameworks";
 import { Movie } from "../entities";
 import { StatusBar } from "expo-status-bar";
 import { BackdropPoster } from "../components/BackdropPoster";
@@ -8,7 +8,7 @@ import { MovieSlider } from "../components/MovieSlider";
 
 export const MoviesPage = () => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
-  const { data, isLoading, error } = useMovies();
+  const { data, isLoading, error, rateMovie } = useMoviesWithRating();
 
   if (error) {
     return <Text>{JSON.stringify(error)}</Text>;
@@ -35,6 +35,9 @@ export const MoviesPage = () => {
           [{ nativeEvent: { contentOffset: { x: scrollX } } }],
           { useNativeDriver: true }
         )}
+        onCustomRateSelected={(movie, customRate) =>
+          rateMovie(movie, customRate)
+        }
       />
     </View>
   );

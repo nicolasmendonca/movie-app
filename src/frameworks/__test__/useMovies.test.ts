@@ -1,23 +1,8 @@
-import React from "react";
-import { renderHook, act } from "@testing-library/react-hooks";
-import { useMovies, MoviesRepository } from "../useMovies";
-import { TmdbService, ITmdbMoviePageResponse } from "../../services";
-import { MoviesPageInteractor } from "../../useCases";
+import { renderHook } from "@testing-library/react-hooks";
 import { AxiosResponse } from "axios";
-
-const createMoviePageInteractorInstance = (fetchService: any) =>
-  new MoviesPageInteractor(new TmdbService(fetchService as any));
-
-const createWrapper = (
-  moviePageInteractorInstance: MoviesPageInteractor
-): React.FC => ({ children }) => (
-  <MoviesRepository.Provider value={moviePageInteractorInstance}>
-    {children}
-  </MoviesRepository.Provider>
-);
-
-const createWrapperWithFetchService = (fetchService: any) =>
-  createWrapper(createMoviePageInteractorInstance(fetchService));
+import { useMovies } from "../useMovies";
+import { ITmdbMoviePageResponse } from "../../services";
+import { createWrapperWithFetchService } from "../../../testUtils/useMoviesWrapper";
 
 describe("useMovies", () => {
   test("request init", () => {

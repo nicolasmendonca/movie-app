@@ -7,9 +7,10 @@ import {
   Dimensions,
   Image,
 } from "react-native";
+import StarRating from "react-native-star-rating";
 import { Movie } from "../entities";
 import { TmdbService } from "../services";
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const SPACING = 10;
 const ITEM_SIZE = width * 0.72;
@@ -19,11 +20,13 @@ interface IMovieSliderProps {
   movies: Movie[];
   scrollX: Animated.Value;
   onScroll: Animated.WithAnimatedValue<any>;
+  onCustomRateSelected: (movie: Movie, customRate: number) => void;
 }
 export const MovieSlider: React.FC<IMovieSliderProps> = ({
   movies,
   scrollX,
   onScroll,
+  onCustomRateSelected,
 }) => {
   return (
     <Animated.FlatList
@@ -58,6 +61,8 @@ export const MovieSlider: React.FC<IMovieSliderProps> = ({
           inputRange,
           outputRange: [100, 50, 100],
         });
+        const hasCustomRating = Boolean(element.item.customRating);
+        const starColor = hasCustomRating ? "orange" : "yellow";
         return (
           <View style={{ width: ITEM_SIZE }}>
             <Animated.View
@@ -71,8 +76,21 @@ export const MovieSlider: React.FC<IMovieSliderProps> = ({
               }}
             >
               <Image
-                source={{ uri: TmdbService.getMoviePosterPath(element.item) }}
+                source={{
+                  uri: TmdbService.getMoviePosterPath(element.item),
+                }}
                 style={styles.posterImage}
+              />
+              <StarRating
+                data-testid={`MovieSlider-${element.item.id}`}
+                maxStars={5}
+                rating={element.item.customRating ?? element.item.averageRating}
+                selectedStar={(customRate) =>
+                  onCustomRateSelected(element.item, customRate)
+                }
+                halfStarColor={starColor}
+                fullStarColor={starColor}
+                emptyStarColor="gray"
               />
               <Text style={{ fontSize: 24 }} numberOfLines={1}>
                 {element.item.title}

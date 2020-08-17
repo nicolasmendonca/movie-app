@@ -1,14 +1,14 @@
-import { MoviesPageInteractor } from "..";
-import { IMoviesFetcherService } from "../MoviesPageInteractor";
+import { MoviesFetcherInteractor } from "..";
+import { IMoviesFetcherService } from "../MoviesFetcherInteractor";
 
-describe("MoviesPageInteractor", () => {
+describe("MoviesFetcherInteractor", () => {
   test("fetchMovies success", async () => {
     const movieInstance = {};
     const fetchMovies = jest.fn().mockResolvedValue(movieInstance);
     const moviesFetcherService: IMoviesFetcherService = {
       fetchMovies,
     };
-    const instance = new MoviesPageInteractor(moviesFetcherService);
+    const instance = new MoviesFetcherInteractor(moviesFetcherService);
     const result = await instance.fetchMovies();
     expect(result).toEqual(movieInstance);
   });
@@ -19,7 +19,7 @@ describe("MoviesPageInteractor", () => {
     const moviesFetcherService: IMoviesFetcherService = {
       fetchMovies,
     };
-    const instance = new MoviesPageInteractor(moviesFetcherService);
+    const instance = new MoviesFetcherInteractor(moviesFetcherService);
     return instance.fetchMovies().catch((e) => {
       expect(e).toEqual(error);
     });

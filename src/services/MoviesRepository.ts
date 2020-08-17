@@ -14,6 +14,7 @@ export interface ITmdbMovie {
   original_title?: string;
   original_name?: string;
   name?: string;
+  vote_average: number;
 }
 
 export interface ITmdbMoviePageResponse {
@@ -46,6 +47,7 @@ export class TmdbService implements IMoviesFetcherService {
             backdropPath: movieResponse.backdrop_path,
             popularity: movieResponse.popularity,
             posterPath: movieResponse.poster_path,
+            averageRating: movieResponse.vote_average / 2, // TMDB uses X/10 rating. We use X/5.
           })
       );
     });
