@@ -1,0 +1,17 @@
+name: Codecov
+on:
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Modules
+        run: yarn
+      - name: Run tests and upload
+        uses: marsam/codeclimate-action@master
+        with:
+          command: yarn test --coverage
+          reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
