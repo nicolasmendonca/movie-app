@@ -7,6 +7,14 @@ import { TmdbService, ITmdbMoviePageResponse } from "../../services";
 import { Movie } from "../../entities";
 import { AxiosResponse } from "axios";
 
+const renderComponentWithFetchService = (fetchService: any) => (
+  <MoviesRepository.Provider
+    value={new MoviesPageInteractor(new TmdbService(fetchService as any))}
+  >
+    <MoviesPage />
+  </MoviesRepository.Provider>
+);
+
 test("MoviesPage shows a loading indicator when the request is loading", () => {
   let resolver: (movies: Movie[]) => void;
   let rejecter: (error: any) => void;
@@ -18,14 +26,8 @@ test("MoviesPage shows a loading indicator when the request is loading", () => {
         rejecter = reject;
       })
   );
-  rendered = render(
-    <MoviesRepository.Provider
-      value={new MoviesPageInteractor(new TmdbService(fetchService as any))}
-    >
-      <MoviesPage />
-    </MoviesRepository.Provider>
-  );
-  expect(rendered.getByText("Loading...")).toBeTruthy();
+  const { getByText } = render(renderComponentWithFetchService(fetchService));
+  expect(getByText("Loading...")).toBeTruthy();
 });
 
 test("when the request fails renders the error message", async () => {
@@ -36,13 +38,7 @@ test("when the request fails renders the error message", async () => {
         reject = rej;
       })
   );
-  const { getByText } = render(
-    <MoviesRepository.Provider
-      value={new MoviesPageInteractor(new TmdbService(fetchService as any))}
-    >
-      <MoviesPage />
-    </MoviesRepository.Provider>
-  );
+  const { getByText } = render(renderComponentWithFetchService(fetchService));
 
   act(() => {
     reject("something went wrong");
@@ -61,13 +57,7 @@ test("when the request succeeds renders the movie list", async () => {
         resolve = res;
       })
   );
-  const { getByText } = render(
-    <MoviesRepository.Provider
-      value={new MoviesPageInteractor(new TmdbService(fetchService as any))}
-    >
-      <MoviesPage />
-    </MoviesRepository.Provider>
-  );
+  const { getByText } = render(renderComponentWithFetchService(fetchService));
 
   act(() => {
     resolve({
