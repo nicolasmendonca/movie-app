@@ -1,5 +1,7 @@
 # Movies App
 
+[![codecov](https://codecov.io/gh/nicolasmendonca/movie-app/branch/master/graph/badge.svg)](https://codecov.io/gh/nicolasmendonca/movie-app)
+
 ![screenshot](./assets/screenshot.png)
 
 This app was created with expo. Just run `yarn && yarn start`.
