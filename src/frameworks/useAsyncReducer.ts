@@ -44,7 +44,7 @@ export function useAsyncReducer<T>() {
     error: null,
   };
   function reducer(
-    state: AsyncActionState<T> = initialState,
+    state: AsyncActionState<T>,
     action: AsyncStateActionTypes<T>
   ): AsyncActionState<T> {
     switch (action.type) {

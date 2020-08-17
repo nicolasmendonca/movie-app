@@ -76,7 +76,7 @@ test("when the request succeeds renders the movie list", async () => {
         results: [
           {
             id: 1,
-            title: "Movie 1",
+            original_name: "Movie 1",
             overview: "Overview text",
             popularity: 4.2,
             poster_path: "/poster_path.png",
