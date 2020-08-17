@@ -4,10 +4,12 @@ import { TmdbFetchService } from "../services/MoviesRepository";
 import { Movie } from "../entities";
 import { useAsyncReducer } from "./useAsyncReducer";
 
+export const MoviesRepository = React.createContext<MoviesPageInteractor>(
+  new MoviesPageInteractor(new TmdbFetchService())
+);
+
 export function useMovies() {
-  const moviesRepository = React.useRef(
-    new MoviesPageInteractor(new TmdbFetchService())
-  ).current;
+  const moviesRepository = React.useContext(MoviesRepository);
   const { dispatch, ...asyncReducer } = useAsyncReducer<Movie[]>();
 
   React.useEffect(() => {
