@@ -1,6 +1,7 @@
 # Movies App
 
-[![codecov](https://codecov.io/gh/nicolasmendonca/movie-app/branch/master/graph/badge.svg)](https://codecov.io/gh/nicolasmendonca/movie-app)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ee8eb5e3c3c32a2bb225/test_coverage)](https://codeclimate.com/github/nicolasmendonca/movie-app/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ee8eb5e3c3c32a2bb225/maintainability)](https://codeclimate.com/github/nicolasmendonca/movie-app/maintainability)
 
 ![screenshot](./assets/screenshot.png)
 
